@@ -1,4 +1,6 @@
-# FrezzeChallenge
+# Live demo
+
+GH Pages: https://gabrielgambarra.github.io/frezze-challenge/
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.3.
 
