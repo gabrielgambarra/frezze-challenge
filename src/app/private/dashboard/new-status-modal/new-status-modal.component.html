@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Pedido n&deg; {{data.id}}</h1>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+    <mat-form-field>
+        <mat-label>Novo status do pedido</mat-label>
+        <mat-select [(ngModel)]="newStatus" name="new_status">
+            <mat-option *ngFor="let status of statusTypes" [value]="status.value">
+                {{status.view}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button (click)="updateStatus()">Atualizar</button>
+</mat-dialog-actions>

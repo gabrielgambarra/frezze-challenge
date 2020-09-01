@@ -1,0 +1,129 @@
+<form #clientForm="ngForm">
+
+    <div fxLayout="row" fxLayoutAlign="center" fxLayout.lt-sm="column">
+
+        <div class="input-space" fxFlex>
+            <mat-form-field>
+                <mat-label>CPF</mat-label>
+                <input matInput #cpf type="text" name="identityId" mask="000.000.000-00" [(ngModel)]="client.identityId"
+                    (focusout)="vefifyIfClientAlreadyExists(cpf.value)" [dropSpecialCharacters]="false" required />
+            </mat-form-field>
+        </div>
+
+        <div class="input-space" fxFlex>
+            <mat-form-field>
+                <mat-label>Nome completo</mat-label>
+                <input matInput type="text" name="fullName" [(ngModel)]="client.fullName" required />
+            </mat-form-field>
+        </div>
+
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="center" fxLayout.lt-sm="column">
+
+        <div class="input-space" fxFlex>
+            <mat-form-field>
+                <mat-label>Telefone</mat-label>
+                <input matInput type="text" name="phone" (keyup)="apllyCellMask(client.clientContacts.phone)"
+                    [mask]="cellMask" [(ngModel)]="client.clientContacts.phone" [dropSpecialCharacters]="false"
+                    required />
+            </mat-form-field>
+        </div>
+
+        <div class="input-space" fxFlex>
+            <mat-form-field>
+                <mat-label>E-mail</mat-label>
+                <input matInput #email="ngModel" type="email" name="email" [(ngModel)]="client.clientContacts.email"
+                    pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
+
+                <mat-error *ngIf="email.errors?.pattern">
+                    Email inválido
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="center" fxLayout.lt-sm="column">
+
+        <div fxFlex fxLayout="row" fxLayoutAlign="center" fxLayout.lt-sm="column">
+
+            <div class="input-space" fxFlex>
+                <mat-form-field>
+                    <mat-label>CEP</mat-label>
+                    <input matInput type="text" name="zipCode" mask="00000-000"
+                        [(ngModel)]="client.clientAddress.zipCode"
+                        (focusout)="getEddressByZipCode(client.clientAddress.zipCode)" required />
+                </mat-form-field>
+            </div>
+
+            <div class="input-space" fxFlex>
+                <mat-form-field>
+                    <mat-label>Número</mat-label>
+                    <input matInput type="text" name="number" [(ngModel)]="client.clientAddress.number" required />
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div fxFlex fxLayout="row" fxLayoutAlign="center" fxLayout.lt-sm="column">
+            <div class="input-space" fxFlex>
+                <mat-form-field>
+                    <mat-label>Endereço</mat-label>
+                    <input matInput type="text" name="eddress" [(ngModel)]="client.clientAddress.streetAddress"
+                        required />
+                </mat-form-field>
+            </div>
+        </div>
+
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="center" fxLayout.lt-sm="column">
+
+        <div fxFlex fxLayout="row" fxLayoutAlign="center" fxLayout.lt-sm="column">
+
+            <div class="input-space" fxFlex>
+                <mat-form-field>
+                    <mat-label>Complemento</mat-label>
+                    <input matInput type="text" name="complement" [(ngModel)]="client.clientAddress.complement" />
+                </mat-form-field>
+            </div>
+
+            <div class="input-space" fxFlex>
+                <mat-form-field>
+                    <mat-label>Bairro</mat-label>
+                    <input matInput type="text" name="neighborhood" [(ngModel)]="client.clientAddress.neighborhood"
+                        required />
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div fxFlex fxLayout="row" fxLayoutAlign="center" fxLayout.lt-sm="column">
+
+            <div class="input-space" fxFlex>
+                <mat-form-field>
+                    <mat-label>Estado</mat-label>
+                    <input matInput type="text" name="state" [(ngModel)]="client.clientAddress.state" required />
+                </mat-form-field>
+            </div>
+
+            <div class="input-space" fxFlex>
+                <mat-form-field>
+                    <mat-label>Cidade</mat-label>
+                    <input matInput type="text" name="city" [(ngModel)]="client.clientAddress.city" required />
+                </mat-form-field>
+            </div>
+        </div>
+
+    </div>
+
+    <div fxLayoutAlign="space-between">
+        <div fxLayoutAlign="end">
+            <button mat-button [routerLink]="[ '/home' ]" color="warn">Cancelar</button>
+        </div>
+
+        <div fxLayoutAlign="end">
+            <button mat-button matStepperPrevious>Anterior</button>
+            <button mat-button matStepperNext (click)="updateOrCreateClient()">Próximo</button>
+        </div>
+    </div>
+</form>

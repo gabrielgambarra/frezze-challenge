@@ -1,0 +1,147 @@
+<mat-accordion>
+    <a mat-button (click)="addPizzaToOrder()">
+        <mat-icon>add</mat-icon>
+        Adicionar pizza
+    </a>
+    <mat-expansion-panel #painel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+        *ngFor="let pizza of pizzas; let i = index" class="pizza-painel">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon>local_pizza</mat-icon>
+                Pizza {{i + 1}}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <form #pizzasForm="ngForm">
+            <div fxLayout="row" fxLayoutAlign="center" fxLayout.lt-sm="column">
+
+                <div class="input-space" fxFlex>
+                    <mat-label>Tamanho</mat-label>
+                    <mat-radio-group [(ngModel)]="pizza.size" [name]="'size' + i" fxLayoutAlign="space-around" required>
+                        <mat-radio-button value="P">
+                            P
+                        </mat-radio-button>
+                        <mat-radio-button value="M">
+                            M
+                        </mat-radio-button>
+                        <mat-radio-button value="G">
+                            G
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+                <div class="input-space" fxFlex>
+                    <mat-label>Tipo</mat-label>
+                    <mat-radio-group [(ngModel)]="pizza.halfNHalf" [name]="'halfNHalf' + i" fxLayoutAlign="space-around"
+                        required>
+                        <mat-radio-button [value]="false">
+                            Inteira
+                        </mat-radio-button>
+                        <mat-radio-button [value]="true">
+                            Metade / Metade
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="center" fxLayout.lt-sm="column">
+
+                <div class="input-space" fxFlex>
+                    <mat-label>Borda</mat-label>
+                    <mat-radio-group [(ngModel)]="pizza.crust" [name]="'crust' + i" fxLayoutAlign="space-around"
+                        required>
+                        <mat-radio-button value="FINA">
+                            Fina
+                        </mat-radio-button>
+                        <mat-radio-button value="GROSSA">
+                            Grossa
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+                <div class="input-space" fxFlex>
+                    <mat-label>Molho extra?</mat-label>
+                    <mat-radio-group [(ngModel)]="pizza.extraSauce" [name]="'extraSauce' + i"
+                        fxLayoutAlign="space-around" required>
+                        <mat-radio-button [value]="true">
+                            Sim
+                        </mat-radio-button>
+                        <mat-radio-button [value]="false">
+                            Não
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="center" fxLayout.lt-sm="column">
+
+                <!-- If the halfNHalf is false -->
+                <div class="input-space" fxFlex *ngIf="!pizza.halfNHalf">
+                    <mat-form-field>
+                        <mat-label>Sabor</mat-label>
+                        <mat-select [(ngModel)]="pizza.mainFlavor" [name]="'mainFlavor' + i" required>
+                            <mat-option *ngFor="let flavor of flavors" [value]="flavor.value">
+                                {{flavor.view}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <!-- If the halfNHalf is true -->
+                <div fxLayout="row" fxFlex fxLayoutAlign="center" fxLayout.lt-sm="column" *ngIf="pizza.halfNHalf">
+                    <div class="input-space" fxFlex>
+                        <mat-form-field>
+                            <mat-label>Sabor 1</mat-label>
+                            <mat-select [(ngModel)]="pizza.mainFlavor" [name]="'mainFlavor' + i" required>
+                                <mat-option *ngFor="let flavor of flavors" [value]="flavor.value">
+                                    {{flavor.view}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="input-space" fxFlex>
+                        <mat-form-field>
+                            <mat-label>Sabor 2</mat-label>
+                            <mat-select [(ngModel)]="pizza.secondaryFlavor" [name]="'secondaryFlavor' + i" required>
+                                <mat-option *ngFor="let flavor of flavors" [value]="flavor.value">
+                                    {{flavor.view}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="input-space" fxFlex>
+                    <mat-form-field>
+                        <mat-label>Observações</mat-label>
+                        <input matInput #obs [(ngModel)]="pizza.note" [name]="'note' + i" type="text" maxlength="50">
+                        <mat-hint align="end">{{obs.value?.length || 0}}/50</mat-hint>
+                    </mat-form-field>
+                </div>
+
+            </div>
+        </form>
+
+        <mat-action-row fxLayoutAlign="space-between">
+            <button mat-button color="warn" (click)="deletePizzaConfig(i)">Excluir</button>
+
+            <button mat-button color="primary" [disabled]="!pizzasForm.valid"
+                (click)="painel.close(); finishPizzaConfig(i)">Finalizar</button>
+        </mat-action-row>
+
+    </mat-expansion-panel>
+
+    <div fxLayoutAlign="space-between">
+        <div fxLayoutAlign="end">
+            <button mat-button [routerLink]="[ '/home' ]" color="warn">Cancelar</button>
+        </div>
+
+        <div fxLayoutAlign="end">
+            <button mat-button matStepperNext>Próximo</button>
+        </div>
+    </div>
+
+</mat-accordion>

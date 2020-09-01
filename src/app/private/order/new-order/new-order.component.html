@@ -1,0 +1,29 @@
+<mat-horizontal-stepper id="new-order-steps" linear #stepper>
+    <!-- #docregion editable -->
+    <mat-step label="Config. pedido">
+
+        <app-new-order-step-one #step1></app-new-order-step-one>
+
+    </mat-step>
+    <mat-step label="Cliente">
+
+        <app-new-order-step-two #step2></app-new-order-step-two>
+
+    </mat-step>
+    <mat-step label="Entrega">
+
+        <app-new-order-step-three #step3 [step2]="step2"></app-new-order-step-three>
+
+        <div fxLayoutAlign="space-between">
+            <div fxLayoutAlign="end">
+                <button mat-button [routerLink]="[ '/home' ]" color="warn">Cancelar</button>
+            </div>
+    
+            <div fxLayoutAlign="end">
+                <button mat-button matStepperPrevious>Anterior</button>
+                <button mat-button (click)="stepper.reset(); submitOrder()">Finalizar pedido</button>
+            </div>
+        </div>
+
+    </mat-step>
+</mat-horizontal-stepper>

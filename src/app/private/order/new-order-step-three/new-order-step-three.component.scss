@@ -1,0 +1,17 @@
+#step3 {
+    ::ng-deep .mat-tab-body-content {
+        overflow: hidden;
+    }
+
+    .schedule {
+        margin: 10px 0;
+    }
+}
+
+mat-slide-toggle {
+    margin: 10px;
+}
+
+mat-datepicker-toggle {
+    font-size: 20px;
+}

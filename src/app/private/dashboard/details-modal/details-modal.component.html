@@ -1,0 +1,41 @@
+<h1 mat-dialog-title>Pedido n&deg; {{data.id}}</h1>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+
+    <h3>Cliente:</h3>
+    <p>CPF: {{data.client.identityId}}</p>
+    <p>Nome: {{data.client.fullName}}</p>
+    <p>Telefone: {{data.client.clientContacts.phone}}</p>
+    <p>E-mail: {{data.client.clientContacts.email}}</p>
+
+    <mat-divider></mat-divider>
+
+    <h3>Pizza(s):</h3>
+
+    <ng-container *ngFor="let pizza of data.pizzas; let i = index">
+        <p>Pizza {{i + 1}}</p>
+        <p>Tamanho: {{pizza.size}}</p>
+        <p>Tipo: {{pizza.halfNHalf ? 'Metade / Metade' : 'Inteira'}}</p>
+        <p>Borda: {{pizza.crust | translate: 'crust'}}</p>
+        <p>Molho extra: {{pizza.extraSauce ? 'Sim' : 'Não'}}</p>
+        <p>{{pizza.halfNHalf ? 'Sabor 1' : 'Sabor'}}: {{pizza.mainFlavor | translate: 'flavor'}}</p>
+        <p *ngIf="pizza.halfNHalf">Sabor 2: {{pizza.secondaryFlavor | translate: 'flavor'}}</p>
+        <p>Observações: {{pizza.note}}</p>
+    </ng-container>
+
+    <mat-divider></mat-divider>
+
+    <h3>Entrega:</h3>
+
+    <p>CEP: {{data.client.clientAddress.zipCode | mask: '00000-000'}}</p>
+    <p>
+        Endereço: {{data.client.clientAddress.streetAddress}}, {{data.client.clientAddress.number}}.
+        {{data.client.clientAddress.neighborhood}}
+    </p>
+    <p>Complemento: {{data.client.clientAddress.complement}}</p>
+    <p>Cidade/Estado: {{data.client.clientAddress.city}} - {{data.client.clientAddress.state}}</p>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="dialogRef.close()">Fechar</button>
+</mat-dialog-actions>
